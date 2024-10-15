@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+<head>
+    <title>Seletores</title>
+    <style>
+        .estilo-paragrafo {
+            color: lightblue;
+            font-weight: bold;
+        }
+    </style>
+</head>
+<body>
+    <h1 id="titulo">Este é o título original</h1>
+    <ul>
+        <li>Item 1</li>
+        <li>Item 2</li>
+        <li>Item 3</li>
+    </ul>
+    <p>Este é o primeiro parágrafo.</p>
+    <p>Este é o segundo parágrafo.</p>
+    <p>Este é o terceiro parágrafo.</p>
+    <button id="meu-botao">Clique aqui</button>
+    <script>
+        const titulo = document.querySelector("h1");
+        titulo.textContent = "Este é o novo título!";
+        const itensLista = document.querySelectorAll("ul li");
+        itensLista.forEach(item => {
+            item.style.color = "red";    
+            item.style.fontSize = "20px";
+        });
+        const paragrafos = document.querySelectorAll("p");
+        paragrafos.forEach(paragrafo => {
+            paragrafo.classList.add("estilo-paragrafo");
+        });
+        const botao = document.getElementById("meu-botao");
+        botao.textContent = "Novo Texto do Botão!";
+    </script>
+</body>
+</html>
