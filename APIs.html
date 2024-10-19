@@ -1,0 +1,52 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>GitHub User Search</title>
+</head>
+<body>
+    <h1>Pesquisar Usuários no GitHub</h1>
+    <form id="searchForm">
+        <input type="text" id="username" placeholder="Digite o nome do usuário">
+        <button type="submit">Buscar</button>
+    </form>
+    <h2>Resultados:</h2>
+    <ul id="userList"></ul>
+    <p id="message"></p>
+    <script>
+        document.getElementById('searchForm').addEventListener('submit', function(event) {
+            event.preventDefault();
+            const username = document.getElementById('username').value.trim();
+            const userList = document.getElementById('userList');
+            const message = document.getElementById('message');
+            userList.innerHTML = '';
+            message.textContent = '';
+            if (username === '') {
+                message.textContent = 'Por favor, insira um nome de usuário.';
+                return;
+            }
+            const url = `https://api.github.com/search/users?q=${username}`;
+            fetch(url)
+                .then(response => response.json())
+                .then(data => {
+                    if (data.total_count > 0) {
+                        data.items.forEach(user => {
+                            const li = document.createElement('li');
+                            const link = document.createElement('a');
+                            link.href = user.html_url;
+                            link.textContent = user.login;
+                            link.target = '_blank';
+                            li.appendChild(link);
+                            userList.appendChild(li);
+                        });
+                    } else {
+                        message.textContent = 'Não foram encontrados usuários para esta pesquisa.';
+                    }
+                })
+                .catch(error => {
+                    message.textContent = 'Ocorreu um erro ao buscar os usuários. Tente novamente mais tarde.';
+                    console.error('Erro:', error);
+                });
+        });
+    </script>
+</body>
+</html>
